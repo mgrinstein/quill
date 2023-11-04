@@ -1,21 +1,28 @@
 import sys
 
-from anthropic import HUMAN_PROMPT, AI_PROMPT
+from call_claude import call_claude
 
-from claude import call_claude
 from read_dir import read_dir
 
-PROMPT_START = "{HUMAN_PROMPT} Resume the following repository: \n"
-PROMPT_END = "{AI_PROMPT}"
-OUTPUT_FILE = "temp.txt"
+BASE_QUESTION = "Create a markdown file that summarizes the following codebase, skipping the preamble: \n"
 
-def main(dir_path):
-    read_dir(".", OUTPUT_FILE)
-    with open(OUTPUT_FILE, 'r') as f:
-        prompt = PROMPT_START + f.read() + PROMPT_END
+def main(directory, output_file):
+    codebase_txt = read_dir(directory, output_file)
 
-    print(call_claude(prompt))
+    answer = call_claude(BASE_QUESTION, codebase_txt)
+    print(answer)
+
+    if output_file != "":
+        with open(output_file, 'w') as f:
+            f.write(answer)
 
 
-if __name__ == "__main__":
-    main(sys.argv[1])
+if __name__ == '__main__':
+    output_file = "test_readme.md"
+    main(sys.argv[1], output_file)
+
+# Base question:
+# Generate a markdown file that summarizes the follwing codebase.
+# It contains the following sections:
+# Introduction
+# 
