@@ -1,0 +1,9 @@
+<!-- Create a form where you put the github repository in the format 'username/repo_name' -->
+
+
+<h1>Enter a Github repository</h1>
+<form action="{% url 'submit' %} "method='post'>
+    {% csrf_token %}
+    <input type="text" name="repo">
+    <input type="submit" value="Submit">
+</form>

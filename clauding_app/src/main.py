@@ -38,6 +38,8 @@ def main(repo_path, output_file, branch="master"):
         print(f"Answer written to {output_file}")
     else:
         print(answer)
+    
+    return main
 
 
 def _download_repo(repo_path, temp_dir, branch):
