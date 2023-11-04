@@ -10,7 +10,8 @@ GUIDELINES = "Do not include an introductory text for your answer. Just output t
 
 PROMPT_INSTRUCTIONS = {
     "main_question": BASE_QUESTION,
-    "guidelines": GUIDELINES
+    "guidelines": GUIDELINES,
+    "template": open("template.md", 'r').read()
 }
 
 
@@ -20,6 +21,8 @@ def main(directory, output_file):
     prompt = deepcopy(PROMPT_INSTRUCTIONS)
     prompt["codebase"] = codebase
 
+    prompt = make_prompt(prompt)
+    
     answer = call_claude(prompt)
     print(answer)
 
