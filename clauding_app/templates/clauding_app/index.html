@@ -1,12 +1,60 @@
-<!-- Create a form where you put the github repository in the format 'username/repo_name' -->
+<html>
+<head>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+}
 
+form {
+  background-color: #fff;
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 30px 20px;
+  box-shadow: 2px 5px 10px rgba(0,0,0,0.1);
+}
 
-<h1>Enter a Github repository</h1>
-<form action="{% url 'submit' %} "method='post'>
-    {% csrf_token %}
-    <h3>Enter the repo path</h3>
-    <input type="text" name="repo">
-    <h3>Enter a branch (defaults to "main")</h3>
-    <input type="text" name="branch">
-    <input type="submit" value="Submit">
+h1, h3 {
+  text-align: center; 
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin: 10px 0 20px;
+  box-sizing: border-box; 
+}
+
+input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+}
+</style>  
+</head>
+
+<body>
+
+<h1>Quill: quick, online repository documentation</h1>
+
+<form action="{% url 'submit' %}" method='post'>
+{% csrf_token %}
+
+<h3>Enter the GitHub url:</h3>
+<input type="text" name="repo">
+
+<h3>Enter a branch:</h3>  
+<input type="text" name="branch" value="main">
+
+<input type="submit" value="Submit">
 </form>
+
+</body>
+</html>

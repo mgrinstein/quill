@@ -32,8 +32,7 @@ def generate_readme(repo_path, output_file, branch="master"):
     ] = f"The code base consists of the following files and contents: \n {codebase}"
 
     prompt = create_multi_var_prompt(prompt_elements)
-    print(prompt)
-
+    
     print("Calling Claude...")
 
     answer = call_claude(prompt)
