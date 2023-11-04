@@ -15,7 +15,7 @@ def call_claude(prompt_txt):
 
     completion = anthropic.completions.create(
         model="claude-2",
-        max_tokens_to_sample=300,
+        max_tokens_to_sample=90000,
         prompt=f"{HUMAN_PROMPT} {prompt_txt} {AI_PROMPT}",
     )
     return completion.completion
