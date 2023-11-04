@@ -5,18 +5,13 @@ import zipfile
 
 from copy import deepcopy
 from call_claude import call_claude
-from make_prompt import make_prompt
 from read_dir import read_dir
+from langchain_prompt import create_multi_var_prompt
 
-TEMP_DIR = "temp"
-
-BASE_QUESTION = "Create a markdown file that summarizes the following codebase, skipping the preamble: \n"
-GUIDELINES = "Do not include an introductory text for your answer. Just output the .MD file directly \n"
-
-PROMPT_INSTRUCTIONS = {
-    "main_question": BASE_QUESTION,
-    "guidelines": GUIDELINES,
-    "template": open("template.md", 'r').read()
+PROMPT_ELEMENTS = {
+    "main_request": "Given the following codebase, create a markdown file that summarizes it.",
+    "guidelines": "Do not include an introductory text for your answer. Just output the .MD file directly.",
+    "template_to_follow": open("template.md", 'r').read()
 }
 
 
@@ -37,11 +32,13 @@ def main(repo_path, output_file, branch="master"):
     print("Reading repo...")
     codebase = read_dir(repo_path)
 
-    prompt = deepcopy(PROMPT_INSTRUCTIONS)
-    prompt["codebase"] = codebase
+    prompt_elements = deepcopy(PROMPT_ELEMENTS)
+    prompt_elements["codebase"] = codebase
+
+    prompt = create_multi_var_prompt(prompt_elements)
+    print(prompt)
 
     print("Calling Claude...")
-    prompt = make_prompt(prompt)
     answer = call_claude(prompt)
 
     if output_file != "":
@@ -55,4 +52,3 @@ def main(repo_path, output_file, branch="master"):
 if __name__ == '__main__':
     output_file = "test_readme.md"
     main(sys.argv[1], output_file)
-

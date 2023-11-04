@@ -1,5 +1,3 @@
-Here is a template for a high-quality README.md file that follows industry best practices:
-
 # Project Title
 
 A brief description of what this project does.
