@@ -1,12 +1,13 @@
 # File that prints the contents of all text files in a given directory
 # including subdirectories.
-# Usage: python printdir.py <directory>
-# Example: python printdir.py /home/username/Documents
+# Usage: python read_dir.py <directory>
+# Example: python read_dir.py /home/username/Documents
 
 import os
 import sys
 
-def printdir(directory, output_file=""):
+
+def read_dir(directory, output_file=""):
     if output_file != "":
         f = open(output_file, 'w')
     else:
@@ -15,12 +16,13 @@ def printdir(directory, output_file=""):
     for root, dirs, files in os.walk(directory):
         for file in files:
             if file.endswith('.py'):
-                printfile(os.path.join(root, file), f)
+                read_file(os.path.join(root, file), f)
 
     if f is not None:
         f.close()
 
-def printfile(file_path, f=None):
+
+def read_file(file_path, f=None):
     if f is None:
         print(file_path)
     else:
@@ -35,4 +37,4 @@ def printfile(file_path, f=None):
 
 if __name__ == '__main__':
     output_file = "test.txt"
-    printdir(sys.argv[1], output_file)
+    read_dir(sys.argv[1], output_file)
