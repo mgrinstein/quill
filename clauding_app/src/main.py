@@ -19,16 +19,7 @@ def main(repo_path, output_file, branch="master"):
     temp_dir = tempfile.mkdtemp()
 
     if repo_path.startswith("http"):
-        print("Downloading repo...")
-        # Repo is a URL. Download it to a temporary directory
-        url = f"{repo_path}/archive/refs/heads/{branch}.zip"
-        r = requests.get(url, allow_redirects=True)
-        # Unzip the downloaded file
-        open(f"{temp_dir}/repo.zip", 'wb').write(r.content)
-        with zipfile.ZipFile(f"{temp_dir}/repo.zip", 'r') as zip_ref:
-            zip_ref.extractall(temp_dir)
-        repo_path = f"{temp_dir}/{repo_path.split('/')[-1]}-{branch}"
-
+        _download_repo(repo_path, temp_dir, branch)
     print("Reading repo...")
     codebase = read_dir(repo_path)
 
@@ -47,6 +38,18 @@ def main(repo_path, output_file, branch="master"):
         print(f"Answer written to {output_file}")
     else:
         print(answer)
+
+
+def _download_repo(repo_path, temp_dir, branch):
+    print("Downloading repo...")
+    # Repo is a URL. Download it to a temporary directory
+    url = f"{repo_path}/archive/refs/heads/{branch}.zip"
+    r = requests.get(url, allow_redirects=True)
+    # Unzip the downloaded file
+    open(f"{temp_dir}/repo.zip", 'wb').write(r.content)
+    with zipfile.ZipFile(f"{temp_dir}/repo.zip", 'r') as zip_ref:
+        zip_ref.extractall(temp_dir)
+    repo_path = f"{temp_dir}/{repo_path.split('/')[-1]}-{branch}"
 
 
 if __name__ == '__main__':

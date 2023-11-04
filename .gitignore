@@ -52,7 +52,9 @@ coverage.xml
 cover/
 
 # Test files
-test*
+test*.md
+test*.txt
+clauding_app/src/test*
 
 # Translations
 *.mo
