@@ -8,10 +8,12 @@ from call_claude import call_claude
 from read_dir import read_dir
 from langchain_prompt import create_multi_var_prompt
 
+markdown_template = open("template.md", 'r').read()
 PROMPT_ELEMENTS = {
-    "main_request": "Given the following codebase, create a markdown file that summarizes it.",
-    "guidelines": "Do not include an introductory text for your answer. Just output the .MD file directly.",
-    "template_to_follow": open("template.md", 'r').read()
+    "main_request": "MAIN REQUEST: Given the following codebase, create a markdown file that summarizes it.",
+    "guidelines": "GUIDELINES: Do not include an introductory text for your answer. Just output the .MD file directly.",
+    "diagram": "DIAGRAM: also include a diagram from the mermaid diagram generator library, summarizing the codebase.",
+    "template_to_follow": f"Build up from the following template, as well as general industry best practices for README files: \n MARKDOWN TEMPLATE START:\n {markdown_template} \n MARKDOWN TEMPLATE END",
 }
 
 
@@ -24,7 +26,7 @@ def main(repo_path, output_file, branch="master"):
     codebase = read_dir(repo_path)
 
     prompt_elements = deepcopy(PROMPT_ELEMENTS)
-    prompt_elements["codebase"] = codebase
+    prompt_elements["codebase"] = f"The code base consists of the following files and contents: \n {codebase}"
 
     prompt = create_multi_var_prompt(prompt_elements)
     print(prompt)
