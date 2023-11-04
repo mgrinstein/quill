@@ -22,3 +22,7 @@ def call_claude(prompt):
 def main():
     prompt = f"{HUMAN_PROMPT} how does a court case get to the Supreme Court?{AI_PROMPT}"
     print(call_claude(prompt))
+
+
+if __name__ == "__main__":
+    main()
