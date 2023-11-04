@@ -4,6 +4,9 @@
 <h1>Enter a Github repository</h1>
 <form action="{% url 'submit' %} "method='post'>
     {% csrf_token %}
+    <h3>Enter the repo path</h3>
     <input type="text" name="repo">
+    <h3>Enter a branch (defaults to "main")</h3>
+    <input type="text" name="branch">
     <input type="submit" value="Submit">
 </form>

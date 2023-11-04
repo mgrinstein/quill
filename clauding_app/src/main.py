@@ -4,9 +4,10 @@ import tempfile
 import zipfile
 
 from copy import deepcopy
-from call_claude import call_claude
-from read_dir import read_dir
-from langchain_prompt import create_multi_var_prompt
+
+from .call_claude import call_claude
+from .read_dir import read_dir
+from .langchain_prompt import create_multi_var_prompt
 
 PROMPT_ELEMENTS = {
     "main_request": "Given the following codebase, create a markdown file that summarizes it.",
@@ -15,11 +16,11 @@ PROMPT_ELEMENTS = {
 }
 
 
-def main(repo_path, output_file, branch="master"):
+def generate_readme(repo_path, output_file, branch="master"):
     temp_dir = tempfile.mkdtemp()
 
     if repo_path.startswith("http"):
-        _download_repo(repo_path, temp_dir, branch)
+        repo_path = _download_repo(repo_path, temp_dir, branch)
     print("Reading repo...")
     codebase = read_dir(repo_path)
 
@@ -30,6 +31,7 @@ def main(repo_path, output_file, branch="master"):
     print(prompt)
 
     print("Calling Claude...")
+
     answer = call_claude(prompt)
 
     if output_file != "":
@@ -39,7 +41,7 @@ def main(repo_path, output_file, branch="master"):
     else:
         print(answer)
     
-    return main
+    return answer
 
 
 def _download_repo(repo_path, temp_dir, branch):
@@ -51,9 +53,9 @@ def _download_repo(repo_path, temp_dir, branch):
     open(f"{temp_dir}/repo.zip", 'wb').write(r.content)
     with zipfile.ZipFile(f"{temp_dir}/repo.zip", 'r') as zip_ref:
         zip_ref.extractall(temp_dir)
-    repo_path = f"{temp_dir}/{repo_path.split('/')[-1]}-{branch}"
+    return f"{temp_dir}/{repo_path.split('/')[-1]}-{branch}"
 
 
 if __name__ == '__main__':
     output_file = "test_readme.md"
-    main(sys.argv[1], output_file)
+    generate_readme(sys.argv[1], output_file)
