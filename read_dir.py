@@ -4,10 +4,10 @@
 # Example: python read_dir.py /home/username/Documents
 
 import os
-import sys
-
 
 def read_dir(directory, output_file=""):
+    output = ""
+
     if output_file != "":
         f = open(output_file, 'w')
     else:
@@ -16,25 +16,22 @@ def read_dir(directory, output_file=""):
     for root, dirs, files in os.walk(directory):
         for file in files:
             if file.endswith('.py'):
-                read_file(os.path.join(root, file), f)
+                output += process_file(os.path.join(root, file), f)
 
     if f is not None:
         f.close()
 
+    return output
 
-def read_file(file_path, f=None):
-    if f is None:
-        print(file_path)
-    else:
-        f.write(file_path + '\n')
 
+def process_file(file_path, f=None):
+    output = file_path + '\n'
+    output += "----------------------------------\n"
+    
     with open(file_path, 'r') as g:
-        if f is None:
-            print(g.read())
-        else:
-            f.write(g.read() + '\n')
-
-
-if __name__ == '__main__':
-    output_file = "test.txt"
-    read_dir(sys.argv[1], output_file)
+        output += g.read() + '\n'
+        
+    if f is not None:    
+        f.write(output + '\n')
+    
+    return output
