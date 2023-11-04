@@ -1,8 +1,10 @@
 from langchain.prompts import PromptTemplate
 
+
 def create_multi_var_prompt(prompt_elements: dict):
     multi_var_prompt = PromptTemplate(
-        input_variables=["main_request", "guidelines", "template_to_follow","codebase"],
+        input_variables=["main_request", "guidelines",
+                        "template_to_follow", "codebase"],
         template="""
                 {main_request} \n
                 {guidelines} \n
@@ -13,10 +15,10 @@ def create_multi_var_prompt(prompt_elements: dict):
 
     # Pass in values to the input variables
     prompt = multi_var_prompt.format(
-        main_request=prompt_elements.get('main_request'),
-        guidelines=prompt_elements.get('guidelines'),
-        template_to_follow=prompt_elements.get('template_to_follow'),
-        codebase=prompt_elements.get('codebase')
-        )
-    
+        main_request=prompt_elements['main_request'],
+        guidelines=prompt_elements['guidelines'],
+        template_to_follow=prompt_elements['template_to_follow'],
+        codebase=prompt_elements['codebase']
+    )
+
     return prompt
