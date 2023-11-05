@@ -8,7 +8,7 @@ from markdown import markdown
 from .src.main import generate_readme
 
 def index(request):
-    template = loader.get_template("clauding_app/index.html")
+    template = loader.get_template("quill_app/index.html")
 
     return HttpResponse(template.render({}, request))
 

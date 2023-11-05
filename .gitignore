@@ -54,7 +54,7 @@ cover/
 # Test files
 test*.md
 test*.txt
-clauding_app/src/test*
+quill_app/src/test*
 outputs/
 
 # Translations

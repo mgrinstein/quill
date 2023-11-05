@@ -9,7 +9,7 @@ from .call_claude import call_claude
 from .read_dir import read_dir
 from .langchain_prompt import create_multi_var_prompt
 
-markdown_template = open("clauding_app/src/template.md", "r").read()
+markdown_template = open("quill_app/src/template.md", "r").read()
 PROMPT_ELEMENTS = {
     "main_request": "MAIN REQUEST: Given the following codebase, create a markdown file that summarizes it.",
     "guidelines": "GUIDELINES: Just output a valid .MD file. Don't include any introductory text, just the content of the markdown file.",
