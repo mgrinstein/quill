@@ -12,9 +12,9 @@ from .langchain_prompt import create_multi_var_prompt
 markdown_template = open("quill_app/src/template.md", "r").read()
 PROMPT_ELEMENTS = {
     "main_request": "MAIN REQUEST: Given the following codebase, create a markdown file that summarizes it.",
-    "guidelines": "GUIDELINES: Just output a valid .MD file. Don't include any introductory text, just the content of the markdown file.",
+    "guidelines": "GUIDELINES: Just output a valid .MD file. Don't include anything else.",
     "diagram": "DIAGRAM: also include a diagram from the mermaid diagram generator library, summarizing the codebase.",
-    "template_to_follow": f"Build up from the following template, as well as general industry best practices for README files: \n MARKDOWN TEMPLATE START:\n {markdown_template} \n MARKDOWN TEMPLATE END",
+    "template_to_follow": f"Build up from the following template, updating the headers accordingly, and use other general industry best practices for README files: \n MARKDOWN TEMPLATE START:\n {markdown_template} \n MARKDOWN TEMPLATE END",
 }
 
 
