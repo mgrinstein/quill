@@ -55,6 +55,7 @@ cover/
 test*.md
 test*.txt
 clauding_app/src/test*
+outputs/
 
 # Translations
 *.mo
