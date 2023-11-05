@@ -87,10 +87,6 @@ Click "Submit"
 
 This will generate and download a README.md summarizing the repo.
 
-## Contributing
-
-See [CONTRIBUTING.md](../CONTRIBUTING.md) for contribution guidelines.
-
 ```mermaid
 graph TB
     A[User] --> B{Index View}
@@ -103,6 +99,10 @@ graph TB
     F -- Markdown --> G["Output as .md, <br/> .html, or link"]
     G --> A
 ```
+
+## Contributing
+
+Please reach out for contribution guidelines.
 
 ## PS: This readme was generated with the help of Quill!
 
