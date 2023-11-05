@@ -104,5 +104,5 @@ graph TB
     G --> A
 ```
 
-## PS: This readme was generated with the help of Quill!*
+## PS: This readme was generated with the help of Quill!
 ```
