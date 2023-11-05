@@ -5,6 +5,12 @@
 
 import os
 
+TEXT_EXTENSIONS = [
+    "py",
+    "js",
+    "ts"
+]
+
 def read_dir(directory, output_file=""):
     output = ""
 
@@ -15,7 +21,7 @@ def read_dir(directory, output_file=""):
 
     for root, dirs, files in os.walk(directory):
         for file in files:
-            if file.endswith('.py'):
+            if file.split('.')[-1] in TEXT_EXTENSIONS:
                 output += process_file(os.path.join(root, file), f)
 
     if f is not None:

@@ -4,7 +4,6 @@ from django.http import HttpResponse
 from django.template import loader
 from markdown import markdown
 
-from clauding.settings import STATIC_URL
 
 from .src.main import generate_readme
 
@@ -22,7 +21,7 @@ def submit(request, mode="md"):
     if branch == "":
         branch = "main"
 
-    readme_md = generate_readme(repo, "clauding_app/static/output.md", branch=branch)
+    readme_md = generate_readme(repo, "temp.md", branch=branch)
     ContentFile(readme_md)
 
     if mode == "md":

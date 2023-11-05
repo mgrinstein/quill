@@ -1,21 +1,26 @@
- Here is the generated markdown file summarizing the provided codebase:
+# Quill
 
-```markdown
-# Project Title
-
-A brief description of what this project does. 
+A Django web application that generates README files for code repositories. 
 
 ## Table of Contents
 
 - [About](#about)
-- [Getting Started](#getting_started) 
+- [Getting Started](#getting_started)
 - [Usage](#usage)
-- [Code Structure](#code_structure)
 - [Contributing](../CONTRIBUTING.md)
 
 ## About <a name="about"></a>
 
-This project consists of a simple Node.js application with REST API endpoints for a todo list app. It uses Express for the web framework and Sequelize as the ORM for MySQL.
+Quill is a web app built with Django that allows users to input a GitHub repo URL and branch name. It will then download the repo code, analyze it, and generate a custom README.md file summarizing the project. 
+
+Key features:
+
+- Parse local directories or clone remote GitHub repos
+- Auto-generate table of contents
+- Customizable templates
+- Output as .md file, .html, or URL link  
+
+![Architecture](architecture.jpeg)
 
 ## Getting Started <a name="getting_started"></a>
 
@@ -23,52 +28,81 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- Node.js
-- MySQL
+Requirements for running the Quill app:
+
+```
+- Python 3.6+
+- Django 4.2+
+- Markdown and Mermaid libraries
+```
 
 ### Installing
 
-1. Clone the repository
-2. Run `npm install` to install dependencies
-3. Configure your MySQL connection in `config/config.json` 
-4. Run `npm start` to start the server
-5. The API will be running on http://localhost:3000
+Clone the repository locally:
+
+```
+git clone https://github.com/yourname/Quill.git
+```
+
+Install dependencies:
+
+```
+pip install -r requirements.txt
+```
+
+Make migrations:
+
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+
+Run development server:
+
+```
+python manage.py runserver
+```
+
+The app will now be running at `http://localhost:8000`.
 
 ## Usage <a name="usage"></a>
 
-The API contains the following endpoints:
+The main workflow is:
 
-- GET /api/todos - Get all todo items
-- POST /api/todos - Create a new todo item
-- GET /api/todos/:id - Get a todo item by id
-- PUT /api/todos/:id - Update a todo item by id
-- DELETE /api/todos/:id - Delete a todo item by id
+1. User submits GitHub repo URL and (optional) branch name
 
-Todo items have the following properties:
+2. Quill clones the repo and reads all .py files 
 
-- id - Integer
-- name - String
-- completed - Boolean 
+3. The codebase is passed to Claude AI to generate a custom README
 
-## Code Structure <a name="code_structure"></a>
+4. User downloads the .md file or views it formatted as HTML
 
-```mermaid
-graph TD
-    A[app.js] -->|Initializes| B(Express)
-    B --> C{routes/index.js}
-    C -->|Forwards requests| D[controllers/todos.js]
-    D --> E[(Models)]
-    E --> F[(MySQL)]
+For example, to generate a README for https://github.com/anthropic/claude-quickstart:
+
+```
+Visit http://localhost:8000
+Enter https://github.com/anthropic/claude-quickstart into the form
+Click "Submit"
 ```
 
-- app.js - Entry point, initializes Express
-- routes/index.js - Routes requests to the appropriate controller
-- controllers/todos.js - Contains CRUD logic for todo items
-- models/ - Data models, interfaces with database via Sequelize
-- config/config.json - Database configuration
+This will generate and download a README.md summarizing the repo.
 
 ## Contributing
 
-See [CONTRIBUTING.md](../CONTRIBUTING.md)
+See [CONTRIBUTING.md](../CONTRIBUTING.md) for contribution guidelines.
 
+```mermaid
+graph TB
+    A[User] --> B{Index View}
+    B -- GET --> C[index.html]
+    C --> B
+    
+    B -- POST --> D[Submit View]
+    D --"1. Get repo URL"--> E["Clone Repo <br/> Read Files"]
+    E -- Codebase --> F["Call Claude AI"]
+    F -- Markdown --> G["Output as .md, <br/> .html, or link"]
+    G --> A
+```
+
+## PS: This readme was generated with the help of Quill!*
 ```
